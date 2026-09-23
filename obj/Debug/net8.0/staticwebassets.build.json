@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "elkYzS1hkV5MD65/a0dmO8jAGmrzyZrcbodXv8cGQPA=",
-  "Source": "ProyectoAutos",
-  "BasePath": "_content/ProyectoAutos",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"R8O0B6G+zd4iLSBL3NPst914Hijo3p3HOzxeWRxTbFU=","Source":"ProyectoAutos","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
