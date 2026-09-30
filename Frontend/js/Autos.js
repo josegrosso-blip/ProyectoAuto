@@ -1,4 +1,4 @@
-const urlAutos = "https://tub-celebrities-saturday-presentations.trycloudflare.com/api/CargarAutos";
+const urlAutos = "https://NUEVA-URL.trycloudflare.com/api/CargarAutos";
 
 function ObtenerCargaAuto() {
 	fetch(urlAutos)
