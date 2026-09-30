@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoAutos.Data;
-using ProyectoAutos.Models;
+    using ProyectoAuto.Models;
 
 namespace ProyectoAutos.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/CargarAutos")]
     [ApiController]
     public class CargarAutos : ControllerBase
     {
@@ -47,9 +47,14 @@ namespace ProyectoAutos.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCargaAuto(int id, CargaAuto cargaAuto)
         {
-            if (id != cargaAuto.AutoId)
+            if (id != cargaAuto.AutosId)
             {
                 return BadRequest();
+            }
+
+            if (!DatosValidos(cargaAuto))
+            {
+                return BadRequest("Completa todos los campos. El modelo debe tener al menos 2 caracteres y la patente entre 7 y 9 caracteres.");
             }
 
             _context.Entry(cargaAuto).State = EntityState.Modified;
@@ -78,10 +83,15 @@ namespace ProyectoAutos.Controllers
         [HttpPost]
         public async Task<ActionResult<CargaAuto>> PostCargaAuto(CargaAuto cargaAuto)
         {
+            if (!DatosValidos(cargaAuto))
+            {
+                return BadRequest("Completa todos los campos. El modelo debe tener al menos 2 caracteres y la patente entre 7 y 9 caracteres.");
+            }
+
             _context.CargaAuto.Add(cargaAuto);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCargaAuto", new { id = cargaAuto.AutoId }, cargaAuto);
+            return CreatedAtAction("GetCargaAuto", new { id = cargaAuto.AutosId }, cargaAuto);
         }
 
         // DELETE: api/CargarAutos/5
@@ -94,6 +104,11 @@ namespace ProyectoAutos.Controllers
                 return NotFound();
             }
 
+            if (cargaAuto.Disponibilidad != false)
+            {
+                return BadRequest("Solo se puede eliminar un auto cuando está No disponible.");
+            }
+
             _context.CargaAuto.Remove(cargaAuto);
             await _context.SaveChangesAsync();
 
@@ -102,7 +117,22 @@ namespace ProyectoAutos.Controllers
 
         private bool CargaAutoExists(int id)
         {
-            return _context.CargaAuto.Any(e => e.AutoId == id);
+            return _context.CargaAuto.Any(e => e.AutosId == id);
+        }
+
+        private bool DatosValidos(CargaAuto auto)
+        {
+            return !string.IsNullOrWhiteSpace(auto.Marca)
+                && !string.IsNullOrWhiteSpace(auto.Modelo)
+                && auto.Modelo.Trim().Length >= 2
+                && auto.Año >= 2000
+                && auto.Año <= 2050
+                && !string.IsNullOrWhiteSpace(auto.Patente)
+                && auto.Patente.Trim().Length >= 7
+                && auto.Patente.Trim().Length <= 9
+                && auto.Kms >= 0
+                && auto.FechaDeIngreso != default
+                && auto.Disponibilidad.HasValue;
         }
     }
 }

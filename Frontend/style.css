@@ -1,0 +1,46 @@
+#Formulario 
+{
+background-color: #3d61af;
+}
+
+
+#Info_Autos
+{
+background-color: #3d61af;
+}
+
+#ActualizarBoton
+{
+background-color: gray;
+color: white;
+}
+ 
+#GuardarAutoBoton
+{
+background-color: gray;
+color: white;
+}
+
+#GuardarAutoBoton:hover
+{
+	border-color: white;
+	color: white;
+}
+
+body
+{
+ background-color: #EBEBE0;
+}
+
+#Concesionario
+{
+color: rgb(0, 0, 0);
+}
+
+#DatosAutos
+{
+color: rgb(0, 0, 0);
+}
+
+
+

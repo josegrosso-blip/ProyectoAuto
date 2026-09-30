@@ -1,11 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion de Autos</title>
+    <title>Tp Autos JG</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <main class="container py-4">
+        <h1 id="Concesionario">Concesionario José Grosso</h1>
+        <p id="DatosAutos">Agrega acá abajo los datos del automóvil</p>
+
+        <section id="Formulario" class="card p-3 mb-4">
+            <h2 class="h4">Agrega el auto</h2>
+            <form onsubmit="AgregarCargaAuto(event)">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="Marca" class="form-label">Marca</label>
+                        <input type="text" id="Marca" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Modelo" class="form-label">Modelo</label>
+                        <input type="text" id="Modelo" class="form-control" minlength="2" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Año" class="form-label">Año</label>
+                        <input type="number" id="Año" class="form-control" min="2000" max="2050" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Patente" class="form-label">Patente</label>
+                        <input type="text" id="Patente" class="form-control" minlength="7" maxlength="9" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Kms" class="form-label">Kilómetros</label>
+                        <input type="number" id="Kms" class="form-control" min="0" step="1" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="FechaDeIngreso" class="form-label">Fecha de ingreso</label>
+                        <input type="date" id="FechaDeIngreso" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Disponibilidad" class="form-label">Disponibilidad</label>
+                        <select id="Disponibilidad" class="form-select" required>
+                            <option value="">Seleccionar</option>
+                            <option value="true">Disponible</option>
+                            <option value="false">No disponible</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button id="GuardarAutoBoton" type="submit" class="btn btn-primary">Guardar Auto</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <section id="Info_Autos" class="card p-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h4 mb-0">Información sobre los autos</h2>
+                <button id="ActualizarBoton" class="btn btn-outline-primary" onclick="ObtenerCargaAuto()">Actualizar</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Año</th>
+                            <th>Patente</th>
+                            <th>Kilómetros</th>
+                            <th>Fecha de ingreso</th>
+                            <th>Disponibilidad</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaCargaAuto"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal fade" id="editarAutoModal" tabindex="-1" aria-labelledby="tituloEditarAuto" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="form-editar-auto" onsubmit="actualizarAuto(event)">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="tituloEditarAuto">Editar auto</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="idEditar">
+                        <div class="mb-3">
+                            <label for="marcaEditar" class="form-label">Marca</label>
+                            <input type="text" id="marcaEditar" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="modeloEditar" class="form-label">Modelo</label>
+                            <input type="text" id="modeloEditar" class="form-control" minlength="2" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="anioEditar" class="form-label">Año</label>
+                            <input type="number" id="anioEditar" class="form-control" min="2000" max="2050" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="patenteEditar" class="form-label">Patente</label>
+                            <input type="text" id="patenteEditar" class="form-control" minlength="7" maxlength="9" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="kmEditar" class="form-label">Kilómetros</label>
+                            <input type="number" id="kmEditar" class="form-control" min="0" step="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaIngresoEditar" class="form-label">Fecha de ingreso</label>
+                            <input type="date" id="fechaIngresoEditar" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="disponibilidadEditar" class="form-label">Disponibilidad</label>
+                            <select id="disponibilidadEditar" class="form-select" required>
+                                <option value="">Seleccionar</option>
+                                <option value="true">Disponible</option>
+                                <option value="false">No disponible</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/Autos.js"></script>
 </body>
 </html>

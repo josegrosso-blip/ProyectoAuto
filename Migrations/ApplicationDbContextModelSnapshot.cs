@@ -22,18 +22,18 @@ namespace ProyectoAutos.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ProyectoAutos.Models.CargaAuto", b =>
+            modelBuilder.Entity("ProyectoAuto.Models.CargaAuto", b =>
                 {
-                    b.Property<int>("AutoId")
+                    b.Property<int>("AutosId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AutoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AutosId"));
 
                     b.Property<int>("Año")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Disponible")
+                    b.Property<bool?>("Disponible")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("FechaIngreso")
@@ -51,7 +51,7 @@ namespace ProyectoAutos.Migrations
                     b.Property<string>("Patente")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AutoId");
+                    b.HasKey("AutosId");
 
                     b.ToTable("CargaAuto");
                 });
