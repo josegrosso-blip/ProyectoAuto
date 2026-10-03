@@ -1,4 +1,4 @@
-const urlAutos = "https://tuning-logic-salmon-launched.trycloudflare.com/api/CargarAutos";
+const urlAutos = "https://dash.cloudflare.com/047c9da6a85695e2f56ab42b10ade608/workers/services/view/proyectoauto/production";
 
 function mostrarCargaAuto(data) {
     const tbody = document.getElementById("tablaCargaAuto");
